@@ -1,0 +1,25 @@
+- name: Cisco shows example
+  host: all
+  gather_facts: false
+
+  vars: # for execution enviroment
+
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_become: yes
+    ansible_become_method: enable
+
+ tasks:
+
+ - name: Display show ip int brief & show ip route
+   cisco.ios.ios_command:
+     commands:
+       - show ip interface brief
+       - show ip route
+
+   register: output
+
+ - name: Print output
+   debug:
+     var: output.stdout_lines
+
